@@ -57,7 +57,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,,
+            //スクロール方向を逆転,,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -65,21 +65,6 @@
 / {
     combos {
         compatible = "zmk,combos";
-
-        ZenkakuHankaku {
-            bindings = <&kp GRAVE>;
-            key-positions = <11 12>;
-        };
-
-        DeleteKey {
-            bindings = <&kp DEL>;
-            key-positions = <7 8>;
-        };
-
-        InsertKey {
-            bindings = <&kp INS>;
-            key-positions = <6 7>;
-        };
 
         CenterClick {
             bindings = <&mkp MB3>;
@@ -223,10 +208,10 @@
 
         layer_7 {
             bindings = <
-&trans                &trans     &kp LC(E)  &kp LS(R)  &trans                       &kp LC(Y)  &trans  &trans     &kp LS(O)  &trans
-&kp LC(A)             &kp LC(S)  &kp LC(D)  &kp LC(F)  &kp LC(G)                    &trans     &trans  &kp LC(L)  &trans     &trans
-&mt LEFT_SHIFT LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(B)                    &kp LC(N)  &trans  &trans     &trans     &trans
-&trans                &trans     &trans     &trans     &trans     &trans    &trans  &trans             &trans     &trans     &trans
+&trans                &kp LC(W)  &kp LC(E)  &kp LS(R)  &kp F10                      &kp LC(Y)  &kp LC(U)  &kp LC(I)  &kp LANG2  &kp LANG1
+&kp LC(A)             &kp LC(S)  &kp LC(D)  &kp LC(F)  &kp LC(G)                    &kp LC(H)  &trans     &kp LC(L)  &trans     &trans
+&mt LEFT_SHIFT LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(B)                    &kp LC(N)  &trans     &trans     &trans     &trans
+&trans                &trans     &trans     &trans     &trans     &trans    &trans  &trans                &trans     &trans     &trans
             >;
         };
     };
