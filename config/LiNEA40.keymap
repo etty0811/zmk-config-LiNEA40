@@ -57,7 +57,7 @@
         layers = <SCROLL>;
         input-processors =
             <&zip_xy_transform INPUT_TRANSFORM_Y_INVERT>,
-            //スクロール方向を逆転,,,,,,,,,
+            //スクロール方向を逆転,,,,,,,,,,
             <&zip_xy_to_scroll_mapper>;
     };
 };
@@ -123,10 +123,10 @@
 
         default_layer {
             bindings = <
-&kp Q             &kp W         &kp E               &kp R   &kp T                                  &kp Y            &kp U  &kp I      &kp O    &lt 5 P
-&kp A             &kp S         &kp D               &kp F   &kp G                                  &kp H            &kp J  &kp K      &kp L    &lt 5 MINUS
-&mt LEFT_SHIFT Z  &kp X         &kp C               &kp V   &kp B                                  &kp N            &kp M  &kp COMMA  &kp DOT  &mt RIGHT_SHIFT SLASH
-&kp LCTRL         &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &trans  &lt 5 TAB  &lt 7 SPACE    &lt 2 ENTER  &lt 4 BACKSPACE         &kp ESC    &kp F10  &kp LS(INT1)
+&kp Q             &kp W         &kp E               &kp R   &kp T                                  &kp Y          &kp U  &kp I      &kp O    &lt 5 P
+&kp A             &kp S         &kp D               &kp F   &kp G                                  &kp H          &kp J  &kp K      &kp L    &lt 5 MINUS
+&mt LEFT_SHIFT Z  &kp X         &kp C               &kp V   &kp B                                  &kp N          &kp M  &kp COMMA  &kp DOT  &mt RIGHT_SHIFT SLASH
+&kp LCTRL         &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &trans  &lt 5 TAB  &lt 7 SPACE    &lt 2 ENTER  &kp BACKSPACE         &lt 4 ESC  &kp F10  &kp LS(INT1)
             >;
 
             sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
@@ -186,7 +186,7 @@
             bindings = <
 &kp LS(LG(S))  &kp LC(LS(TAB))         &kp UP_ARROW  &kp LC(TAB)        &trans                            &kp KP_MULTIPLY  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp KP_PLUS
 &kp HOME       &kp LEFT_ARROW          &kp DOWN      &kp RIGHT_ARROW    &kp END                           &kp KP_SLASH     &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp KP_MINUS
-&trans         &kp LG(LS(LEFT_ARROW))  &trans        &kp LG(LS(RIGHT))  &trans                            &kp UNDER        &kp N7        &kp NUMBER_8  &kp NUMBER_9  &kp ENTER
+&trans         &kp LG(LS(LEFT_ARROW))  &trans        &kp LG(LS(RIGHT))  &trans                            &kp UNDER        &kp N7        &kp NUMBER_8  &kp NUMBER_9  &kp SQT
 &trans         &trans                  &trans        &trans             &trans   &trans    &kp RIGHT_GUI  &kp NUMBER_0                   &kp NUMBER_0  &kp DOT       &kp QUESTION
             >;
 
