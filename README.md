@@ -10,12 +10,12 @@ LiNEA40 の ZMK ファームウェア設定です。[DYA Studio](https://studio.
 
 | タブ | 内容 | 使用モジュール |
 | --- | --- | --- |
-| Keymap | キー割り当て・レイヤーの編集、押下キーの表示 | ZMK Studio / fast-keymap / input-stream / module-physical-layout |
+| Keymap | キー割り当て・レイヤーの編集、押下キーの表示、ロータリーエンコーダーの割り当て | ZMK Studio / fast-keymap / input-stream / module-physical-layout / runtime-sensor-rotate |
 | Macro / Combo | マクロ・コンボの作成と編集 | runtime-macro / runtime-combo |
 | Trackball | カーソル速度・回転・軸反転・スクロール・オートマウス、PMW3610 の CPI や省電力設定 | runtime-input-processor / pmw3610-with-custom-studio-rpc |
 | Connection | BLE プロファイル管理、接続先・OS ごとのデフォルトレイヤー | ble-management / default-layer / os-detection |
 | Settings | 各種設定 | settings-rpc / custom-settings |
-| Troubleshooting | ファームウェア情報、再起動原因の確認 | device-info / watchdog |
+| Troubleshooting | ファームウェア情報、再起動原因の確認、キースイッチ診断 | device-info / watchdog / kscan-diagnostics |
 
 ## 書き込み手順
 
@@ -50,7 +50,10 @@ ZMK のバージョンが大きく変わるため、初回は設定のリセッ�
 
 ## 補足
 
-- 既存のコンボ（`config/LiNEA40.keymap` の `combos`）はこれまで通り動作します。DYA Studio の Combo タブで作るコンボとは別管理です。
+- コンボは `config/LiNEA40.keymap` の `runtime_combo_defaults` に初期値として定義しています。Combo タブに表示され、そのまま編集できます（最大 16 個）。Studio で変更したコンボは Studio 側の値が優先され、「Reset to Default」でこの初期値に戻ります。
+- ロータリーエンコーダーはレイヤーごとに `rsr_*` で初期値を定義しています。Studio で割り当てたレイヤーは Studio 側の値が優先されます。
+- Web の Keymap Editor はコンボとエンコーダーの定義を扱えなくなります。コンボとエンコーダーは DYA Studio から変更してください。
+- バッテリー履歴・開発者ツール（devtool）・スリープ時間の設定は入れていません。
 - DYA Studio のプレビューに出るトラックボールとロータリーエンコーダーの位置は目安です（`LiNEA40.dtsi` の `trackball_layout` / `left_encoder_layout`）。
 - `config/west.yml` の各モジュールは `main` ブランチを追従します。上流の変更でビルドが通らなくなった場合は、動いていたコミットに `revision` を固定してください。
 - DYA Studio 対応前の状態はタグ `pre-dya-studio` に残しています。
