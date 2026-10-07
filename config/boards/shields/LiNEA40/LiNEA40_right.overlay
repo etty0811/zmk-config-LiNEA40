@@ -1,4 +1,10 @@
+#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include <input/processors.dtsi>
+#include <input/processors/runtime-input-processor.dtsi>
+#include <dt-bindings/zmk/runtime_input_processor.h>
+
 #include "LiNEA40.dtsi"
+
 &default_transform {
     col-offset = <6>;
 };
@@ -12,15 +18,6 @@
         , <&gpio0 10 GPIO_ACTIVE_HIGH>  //col4-NFC2
         ;
 };
-
-/ {
-    trackball_listener {
-        compatible = "zmk,input-listener";
-        device = <&trackball>;
-
-    };
-};
-
 
 &pinctrl {
     spi0_default: spi0_default {
@@ -53,18 +50,61 @@
 
     trackball: trackball@0 {
         status = "okay";
-        compatible = "pixart,pmw3610";
+        compatible = "cormoran,pmw3610";
         reg = <0>;
         spi-max-frequency = <2000000>;
         irq-gpios = <&xiao_d 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; //MOT-D6
-        automouse-layer = <1>;
-        snipe-layers = <2>;
-        scroll-layers = <5>;
-        //scroll-layers = <4 5 6>;
+        cpi = <800>;
+        evt-type = <INPUT_EV_REL>;
+        x-input-code = <INPUT_REL_X>;
+        y-input-code = <INPUT_REL_Y>;
+        settings-id = "trackball";
     };
+};
+
+// オートマウス・スナイプ・スクロールは DYA Studio の Trackball タブから変更できる。ここは初期値。
+/ {
+    // レイヤー2 (MARK) の間はカーソル速度を半分にする
+    snipe_runtime_input_processor: snipe_runtime_input_processor {
+        compatible = "zmk,input-processor-runtime";
+        processor-label = "snipe";
+        type = <INPUT_EV_REL>;
+        x-codes = <INPUT_REL_X>;
+        y-codes = <INPUT_REL_Y>;
+        scale-multiplier = <1>;
+        scale-divisor = <2>;
+        track-remainders;
+        active-layers = <(1 << 2)>;
+
+        #input-processor-cells = <0>;
+    };
+};
+
+// カーソル移動でレイヤー1 (MOUSE) を自動で有効にする
+&mouse_runtime_input_processor {
+    temp-layer-enabled;
+    temp-layer = <1>;
+    temp-layer-deactivation-delay-ms = <600>;
+};
+
+// レイヤー5 (SCROLL) の間はカーソル移動をスクロールに変換する
+&scroll_runtime_input_processor {
+    x-codes = <INPUT_REL_X>;
+    y-codes = <INPUT_REL_Y>;
+    xy-to-scroll-enabled;
+    active-layers = <(1 << 5)>;
+    scale-multiplier = <1>;
+    scale-divisor = <3>;
+    x-invert;
+    y-invert;
+
+    axis-snap-mode = <AXIS_SNAP_MODE_Y>;
+    axis-snap-threshold = <600>;
 };
 
 &trackball_listener {
     status = "okay";
     device = <&trackball>;
+    // スクロール変換を先に通し、スクロール中はオートマウスが働かないようにする
+    input-processors = <&scroll_runtime_input_processor &snipe_runtime_input_processor &mouse_runtime_input_processor>;
 };
