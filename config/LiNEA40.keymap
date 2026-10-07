@@ -9,6 +9,7 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <behaviors/runtime-input-processor.dtsi>
 #include <behaviors/runtime_macro.dtsi>
+#include <behaviors/runtime-sensor-rotate.dtsi>
 #include <behaviors/default_layer.dtsi>
 
 #define MOUSE 1
@@ -56,8 +57,9 @@
 };
 
 / {
-    combos {
-        compatible = "zmk,combos";
+    // DYA Studio の Combo タブから編集できるコンボの初期値
+    runtime_combo_defaults {
+        compatible = "cormoran,runtime-combo-defaults";
 
         CenterClick {
             bindings = <&mkp MB3>;
@@ -96,18 +98,34 @@
     };
 
     behaviors {
-        re_kp: sensor_rotate_kp {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&kp>, <&kp>;
+        // ロータリーエンコーダーの初期値 (DYA Studio からレイヤーごとに変更できる)
+        rsr_scrl: rsr_scrl {
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            tap-ms = <20>;
+            cw-binding = <&msc SCRL_DOWN>;
+            ccw-binding = <&msc SCRL_UP>;
         };
 
-        mouse_scrl: mouse_wheel_scrl {
-            compatible = "zmk,behavior-sensor-rotate-var";
-            #sensor-binding-cells = <2>;
-            bindings = <&msc>, <&msc>;
+        rsr_vol: rsr_vol {
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            cw-binding = <&kp C_VOLUME_DOWN>;
+            ccw-binding = <&kp C_VOLUME_UP>;
+        };
 
-            tap-ms = <20>;
+        rsr_updown: rsr_updown {
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            cw-binding = <&kp DOWN_ARROW>;
+            ccw-binding = <&kp UP_ARROW>;
+        };
+
+        rsr_leftright: rsr_leftright {
+            compatible = "zmk,behavior-runtime-sensor-rotate";
+            #sensor-binding-cells = <0>;
+            cw-binding = <&kp RIGHT_ARROW>;
+            ccw-binding = <&kp LEFT_ARROW>;
         };
     };
 
@@ -122,7 +140,7 @@
 &kp LCTRL         &kp LEFT_WIN  &mt LEFT_ALT GRAVE  &trans  &lt 5 TAB  &lt 7 SPACE    &lt 2 ENTER  &kp BACKSPACE         &lt 4 ESC  &kp F10  &kp LS(INT1)
             >;
 
-            sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
+            sensor-bindings = <&rsr_scrl>;
         };
 
         //1
@@ -134,6 +152,8 @@
 &trans  &trans  &trans  &trans  &trans                    &trans  &trans    &trans    &trans    &trans
 &trans  &trans  &trans  &trans  &trans  &trans    &trans  &trans            &trans    &trans    &trans
             >;
+
+            sensor-bindings = <&rsr_trans>;
         };
 
         //2
@@ -146,7 +166,7 @@
 &trans            &trans      &trans      &trans      &trans       &trans    &trans  &trans                                   &trans             &trans                &kp LS(QUESTION)
             >;
 
-            sensor-bindings = <&re_kp C_VOLUME_DOWN C_VOLUME_UP>;
+            sensor-bindings = <&rsr_vol>;
         };
 
         //3
@@ -158,6 +178,8 @@
 &kp HOME  &kp PAGE_DOWN           &kp END       &kp PAGE_UP              &trans                       &kp UNDER        &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp ENTER
 &trans    &trans                  &trans        &trans                   &trans  &trans    &kp ENTER  &kp NUMBER_0                   &kp DOT       &kp ENTER     &kp QUESTION
             >;
+
+            sensor-bindings = <&rsr_trans>;
         };
 
         //4
@@ -170,7 +192,7 @@
 &trans  &trans  &trans  &trans   &trans   &trans    &trans  &trans          &trans             &trans              &trans
             >;
 
-            sensor-bindings = <&mouse_scrl SCRL_DOWN SCRL_UP>;
+            sensor-bindings = <&rsr_scrl>;
         };
 
         //5
@@ -183,7 +205,7 @@
 &trans         &trans                  &trans        &trans             &trans   &trans    &kp RIGHT_GUI  &kp NUMBER_0                   &kp NUMBER_0  &kp DOT       &kp QUESTION
             >;
 
-            sensor-bindings = <&inc_dec_kp DOWN_ARROW UP_ARROW>;
+            sensor-bindings = <&rsr_updown>;
         };
 
         //6
@@ -196,7 +218,7 @@
 &trans        &trans        &trans        &trans        &trans        &trans    &bootloader  &studio_unlock                &trans        &trans        &bt BT_CLR_ALL
             >;
 
-            sensor-bindings = <&inc_dec_kp RIGHT_ARROW LEFT_ARROW>;
+            sensor-bindings = <&rsr_leftright>;
         };
 
         layer_7 {
@@ -206,6 +228,8 @@
 &mt LEFT_SHIFT LC(Z)  &kp LC(X)  &kp LC(C)  &kp LC(V)  &kp LC(B)                    &kp LC(N)  &trans     &trans     &trans     &trans
 &trans                &trans     &trans     &trans     &trans     &trans    &trans  &trans                &trans     &trans     &trans
             >;
+
+            sensor-bindings = <&rsr_trans>;
         };
     };
 };

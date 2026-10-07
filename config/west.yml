@@ -43,6 +43,7 @@ manifest:
     - name: zmk-feature-runtime-combo
     - name: zmk-feature-input-stream
     - name: zmk-feature-module-physical-layout
+    - name: zmk-behavior-runtime-sensor-rotate
     # Trackball
     - name: zmk-driver-pmw3610-with-custom-studio-rpc
     - name: zmk-module-runtime-input-processor
@@ -56,6 +57,7 @@ manifest:
     # 診断
     - name: zmk-feature-device-info
     - name: zmk-feature-watchdog
+    - name: zmk-feature-kscan-diagnostics
     # RGB LED
     - name: zmk-rgbled-widget
       remote: caksoylar
